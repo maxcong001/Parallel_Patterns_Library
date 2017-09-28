@@ -108,7 +108,7 @@ static void abort_if_no_jvm()
 {
     if (JVM == nullptr)
     {
-        __android_log_print(ANDROID_LOG_ERROR, "CPPRESTSDK", "%s", "The CppREST SDK must be initialized before first use on android: https://github.com/Microsoft/cpprestsdk/wiki/How-to-build-for-Android");
+        __android_log_print(ANDROID_LOG_ERROR, "CPPRESTSDK", "%s", "The CppREST SDK must be initialized before first use on android:  https://github.com/maxcong001/Parallel_Patterns_Library/wiki/How-to-build-for-Android");
         std::abort();
     }
 }

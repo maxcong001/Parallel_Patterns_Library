@@ -7,7 +7,7 @@
 * Standard macros and definitions.
 * This header has minimal dependency on windows headers and is safe for use in the public API
 *
-* For the latest on this and related APIs, please see: https://github.com/Microsoft/cpprestsdk
+* For the latest on this and related APIs, please see:  https://github.com/maxcong001/Parallel_Patterns_Library
 *
 * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ****/

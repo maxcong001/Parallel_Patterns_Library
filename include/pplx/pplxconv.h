@@ -6,7 +6,7 @@
 *
 * Utilities to convert between PPL tasks and PPLX tasks
 *
-* For the latest on this and related APIs, please see: https://github.com/Microsoft/cpprestsdk
+* For the latest on this and related APIs, please see:  https://github.com/maxcong001/Parallel_Patterns_Library
 *
 * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ****/
