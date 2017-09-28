@@ -44,6 +44,78 @@ int main()
                     << "this is info log");
     __LOG(debug, "hello logger!"
                      << "this is debug log");
+
+    {
+        pplx::task_completion_event<long> tce;
+        auto val = pplx::create_task(tce);
+
+        std::atomic<long> v(0);
+
+        auto t = val.then(
+                        [&](long x) {
+                            __LOG(error, " x is : " << x);
+                            v.exchange(x);
+                            x = 9;
+                            return pplx::task_from_result(x);
+                        })
+                     .then([&](long x) {
+                         __LOG(error, "in the second then x is " << x);
+                         x = 8;
+                         return pplx::task_from_result(x);
+
+                     })
+                     .then([&](long x) {
+                         __LOG(error, "in the third then, x is : " << x);
+                         return x;
+
+                     });
+
+        // Start the task
+        tce.set(10);
+
+        // Wait for the task.
+        try
+        {
+            t.wait();
+        }
+        catch (pplx::invalid_operation)
+        {
+        }
+        catch (std::exception_ptr)
+        {
+            v = 1;
+        }
+        __LOG(error, "v is : " << v << "  should be " << 10);
+        __LOG(error, "t.get () returns : " << t.get());
+    }
+    {
+        pplx::task_completion_event<void> tce;
+        auto val = pplx::create_task(tce);
+
+        auto t = val.then(
+            [&]() {
+                __LOG(error, " in the test task ");
+
+            });
+        tce.set();
+        // Start the task
+        tce.set_exception(pplx::invalid_operation());
+
+        // Wait for the task.
+        try
+        {
+            t.wait();
+        }
+        catch (pplx::invalid_operation)
+        {
+        }
+        catch (std::exception_ptr)
+        {
+        }
+        __LOG(error, "void test exit");
+    }
+
+#if 0
     {
         // Same as the above test but use multiple when_all
         TaskOptionsTestScheduler sched1;
@@ -84,6 +156,7 @@ int main()
             [&](long x) {
                 __LOG(error, " x is : " << x);
                 v.exchange(x);
+                tce.set(v);
             });
 
         // Start the task
@@ -134,6 +207,7 @@ int main()
 
         // Start the task
         tce.set_exception(pplx::invalid_operation());
+        val.wait();
 
         // Wait for the lambda to finish running
         while (!val.is_done())
@@ -154,6 +228,7 @@ int main()
             [&](long x) {
                 __LOG(error, " x is : " << x);
                 v.exchange(x);
+                return x;
             });
 
         // Start the task
@@ -182,6 +257,7 @@ int main()
         }
         __LOG(error, "v is : " << v << "  should be " << 0);
     }
+#endif
 
     __LOG(error, "exit example");
 }
